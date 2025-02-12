@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  author: yourname
+  description: Ansible role to clone a Git repository and install dependencies.
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+  dependencies: []

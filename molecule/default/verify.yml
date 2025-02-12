@@ -1,0 +1,23 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check if Git is installed
+      command: git --version
+      register: git_version
+      changed_when: false
+
+    - name: Print Git version
+      debug:
+        msg: "Git version: {{ git_version.stdout }}"
+
+    - name: Check if repository directory exists
+      stat:
+        path: "{{ repo_destination }}"
+      register: repo_stat
+
+    - name: Validate repository cloning
+      assert:
+        that:
+          - repo_stat.stat.exists
+          - repo_stat.stat.isdir

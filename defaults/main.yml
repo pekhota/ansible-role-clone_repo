@@ -1,0 +1,15 @@
+# roles/clone_repo/defaults/main.yml
+
+repo_url: "https://github.com/username/repository.git"
+repo_destination: "/var/www/site"
+repo_branch: "main"
+
+# Git user/group
+repo_owner: "www-data"
+repo_group: "www-data"
+
+# SSH known hosts configuration
+known_hosts_path: "~/.ssh/known_hosts"
+
+# Composer options
+composer_install: true

@@ -1,0 +1,10 @@
+---
+- name: Clone or update repository
+  become: yes
+  become_user: "{{ repo_owner }}"
+  git:
+    repo: "{{ repo_url }}"
+    dest: "{{ repo_destination }}"
+    version: "{{ repo_branch }}"
+    update: yes
+    force: yes

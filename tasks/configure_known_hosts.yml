@@ -1,0 +1,7 @@
+---
+- name: Add GitHub to known_hosts
+  become: yes
+  become_user: "{{ repo_owner }}"
+  shell: ssh-keyscan -H github.com >> {{ known_hosts_path }}
+  args:
+    creates: "{{ known_hosts_path }}"

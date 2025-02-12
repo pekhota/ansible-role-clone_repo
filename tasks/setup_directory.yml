@@ -1,0 +1,8 @@
+---
+- name: Ensure the repository directory exists
+  file:
+    path: "{{ repo_destination }}"
+    state: directory
+    owner: "{{ repo_owner }}"
+    group: "{{ repo_group }}"
+    mode: '0755'

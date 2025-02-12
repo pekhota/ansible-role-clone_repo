@@ -1,0 +1,14 @@
+---
+- name: Ensure Composer is installed
+  apt:
+    name: composer
+    state: present
+  when: composer_install
+
+- name: Run composer install
+  become: yes
+  become_user: "{{ repo_owner }}"
+  command: composer install
+  args:
+    chdir: "{{ repo_destination }}"
+  when: composer_install

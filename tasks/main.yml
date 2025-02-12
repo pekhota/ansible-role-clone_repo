@@ -1,0 +1,43 @@
+# roles/clone_repo/tasks/main.yml
+---
+- name: Ensure Git is installed
+  apt:
+    name: git
+    state: present
+    update_cache: yes
+
+- name: Ensure the site directory exists
+  file:
+    path: /var/www/site
+    state: directory
+    owner: admin # todo add var
+    group: admin # todo add var
+    mode: '0755'
+
+- name: Add GitHub to known_hosts
+  become: yes
+  become_user: admin
+  known_hosts:
+    name: github.com
+    key: "{{ lookup('pipe', 'ssh-keyscan -H github.com') }}"
+    path: "~/.ssh/known_hosts"
+
+- name: Clone or update repository
+  become: yes
+  become_user: admin
+  git:
+    repo: "{{ repo_url }}"
+    dest: "{{ repo_destination }}"
+    version: "{{ repo_branch }}"
+    update: yes
+    force: yes
+  environment:
+    GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+  register: git_clone
+
+- name: Install Composer and run composer install as admin
+  become: yes
+  become_user: admin
+  command: composer install
+  args:
+    chdir: /var/www/site
